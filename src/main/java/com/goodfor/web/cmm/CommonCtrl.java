@@ -33,5 +33,5 @@ public class CommonCtrl {
       
       return "index";
    }
-   
+   // 나성
 }
