@@ -1,6 +1,9 @@
-package com.goodfor.web.customer;
+package com.goodfor.web.cus;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.goodfor.web.cmm.IConsumer;
 import com.goodfor.web.cmm.IFunction;
+import com.goodfor.web.enums.SQL;
 import com.goodfor.web.utl.Printer;
 
 @RestController
@@ -70,6 +74,29 @@ public class CustomerCtrl {
         return f.apply(param);
     }
     
+    @GetMapping("/create/table")
+    public Map<?,?> createCustomer(){
+    	HashMap<String, String> paramMap = new HashMap<>();
+    	paramMap.put("CREATE_CUSTOMER", SQL.CREATE_CUSTOMER.toString());
+    	System.out.println("테이블 생성 쿼리 : \n"+paramMap.get("CREATE_CUSTOMER"));
+    	Consumer<HashMap<String, String>> c = t -> customerMapper.createCustomer(t);
+		c.accept(paramMap);
+		paramMap.clear();
+		paramMap.put("msg", "SUCCESS");
+		return paramMap;
+    }
+    
+    @GetMapping("/drop/table")
+    public Map<?,?> dropCustomer(){
+    	HashMap<String, String> paramMap = new HashMap<>();
+    	paramMap.put("DROP_CUSTOMER", SQL.DROP_CUSTOMER.toString());
+    	System.out.println("테이블 삭제 쿼리 : \n"+paramMap.get("DROP_CUSTOMER"));
+    	Consumer<HashMap<String, String>> c = t -> customerMapper.dropCustomer(t);
+		c.accept(paramMap);
+		paramMap.clear();
+		paramMap.put("msg", "SUCCESS");
+		return paramMap;
+    }
 }
 
 

@@ -1,4 +1,4 @@
-package com.goodfor.web.admin;
+package com.goodfor.web.adm;
 
 import org.springframework.stereotype.Repository;
 
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 public interface AdminMapper {
 
 	public int countAdmin();
-
 	public Admin selectByIdPw(Admin param);
 	
 }

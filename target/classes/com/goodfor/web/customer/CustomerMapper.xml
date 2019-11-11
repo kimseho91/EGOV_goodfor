@@ -3,7 +3,18 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.goodfor.web.customer.CustomerMapper">
+<mapper namespace="com.goodfor.web.cus.CustomerMapper">
+	<select id="createCustomer" parameterType="hashmap">
+		${CREATE_CUSTOMER}
+	</select>
+	
+	<select id="dropCustomer" parameterType="hashmap">
+		${DROP_CUSTOMER}
+	</select>
+	
+	<select id="createDB" parameterType="hashmap">
+		${CREATE_DB}
+	</select>
 
     <select id="selectByIdPw" resultType="Customer">
         SELECT * FROM CUSTOMER WHERE MID LIKE #{mid} AND MPW LIKE #{mpw}
@@ -17,6 +28,7 @@
     <select id="existId" resultType="int">
         SELECT COUNT(*) FROM CUSTOMER WHERE MID LIKE #{mid}
     </select>
-    
-
+	<select id="countCustomers" resultType="int">
+        SELECT COUNT(*) FROM CUSTOMER
+    </select>
 </mapper>

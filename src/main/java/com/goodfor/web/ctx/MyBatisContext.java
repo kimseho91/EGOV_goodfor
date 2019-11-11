@@ -13,7 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(basePackages= {"com.getmoney5.web"})
+@MapperScan(basePackages= {"com.goodfor.web"})
 //@EnableAspectJAutoProxy
 //@EnableTransactionManagement
 public class MyBatisContext {
@@ -25,7 +25,7 @@ public class MyBatisContext {
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
       SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
       factoryBean.setDataSource(dataSource);
-      factoryBean.setConfigLocation(applicationContext.getResource("classpath:META-INF/mybatis-config.xml"));
+      factoryBean.setConfigLocation(applicationContext.getResource("classpath:META-INF/mybatis-context.xml"));
       factoryBean.setMapperLocations(applicationContext.getResources("classpath:com/goodfor/web/**/*Mapper.xml"));
       return factoryBean;
     }

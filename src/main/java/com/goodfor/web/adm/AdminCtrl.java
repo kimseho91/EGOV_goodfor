@@ -1,4 +1,4 @@
-package com.goodfor.web.admin;
+package com.goodfor.web.adm;
 
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +32,5 @@ public class AdminCtrl {
 		map.put("msg", result);
 		return map;
 	}
-	
-	
-	
 	
 }

@@ -1,9 +1,7 @@
 package com.goodfor.web.brd;
 
 import java.util.List;
-
 import org.springframework.stereotype.Repository;
-
 import com.goodfor.web.pxy.Proxy;
 
 @Repository

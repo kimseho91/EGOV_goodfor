@@ -1,10 +1,7 @@
-package com.goodfor.web.admin;
+package com.goodfor.web.adm;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import com.goodfor.web.customer.Customer;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
