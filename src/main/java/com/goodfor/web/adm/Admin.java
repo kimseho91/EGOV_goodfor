@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Admin {
-	private String aid, apw, aname, anum, arank, email, phonenum;
+	private String aid, apw, aname, anum, arank, email, phonenum, test;
 }
