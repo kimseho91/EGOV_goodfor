@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.goodfor.web.cmm.IConsumer;
 import com.goodfor.web.cmm.ISupplier;
 import com.goodfor.web.pxy.PageProxy;
+import com.goodfor.web.pxy.Trunk;
 import com.goodfor.web.pxy.Box;
 import com.goodfor.web.utl.Printer;
-
 
 @RestController
 @RequestMapping("/articles")
@@ -32,9 +32,9 @@ public class ArticleCtrl {
 	@Autowired Article art;
 	@Autowired Printer printer;
 	@Autowired ArticleMapper artMapper;
-	@Autowired List<Article> list;
-	@Qualifier PageProxy pager;
-	@Qualifier Box box ;
+	@Autowired Box<Article> box;
+	@Autowired PageProxy pager;
+	@Autowired Trunk<Object> trunk ;
 	
 	@PostMapping("/")
 	public Map<?,?> writeArticle(@RequestBody Article param){
@@ -42,13 +42,11 @@ public class ArticleCtrl {
 		IConsumer<Article> c = t -> artMapper.insertArticle(param); 
 		c.accept(param);
 		ISupplier<String> s = ()->artMapper.countArticle();
-		box.accept(Arrays.asList("msg","count"), Arrays.asList("SUCCESS", s.get()));
-		
+		trunk.put(Arrays.asList("msg","count"), Arrays.asList("SUCCESS", s.get()));
 		/*Articlemap.clear();
 		Articlemap.put("msg","SUCCESS");
 		printer.accept("글쓰기 나감"+Articlemap.get("msg"));*/
-		
-		return box.get();
+		return trunk.get();
 	}
 	
 	@GetMapping("/page/{pageNo}/size/{pageSize}")
@@ -57,15 +55,15 @@ public class ArticleCtrl {
 		pager.setPageNum(pager.parseInt(pageNo));
 		pager.setPageSize(pager.parseInt(pageSize));
 		pager.paging();
-		list.clear();
+		box.clear();
 		ISupplier<List<Article>> s = () -> artMapper.selectAll(pager);
 		List<Integer> pagelist = new ArrayList<>();
 		for( int i=pager.getStartPage(); i<pager.getEndPage()+1 ; i++) {
 			pagelist.add(i);
 		}
-		box.accept(Arrays.asList("articles", "pages", "pxy"),
+		trunk.put(Arrays.asList("articles", "pages", "pxy"),
 				   Arrays.asList(s.get(), pagelist, pager)) ;
-		return box.get();
+		return trunk.get();
 	}
 	
 	@PutMapping("/")
@@ -73,12 +71,10 @@ public class ArticleCtrl {
 		printer.accept("글 수정 요청 : "+param.getArtseq()+", "+param.getTitle()+", "+param.getContent());
 		IConsumer<Article> c = t -> artMapper.updateByArtseq(param);
 		c.accept(param);
-		box.accept(Arrays.asList("msg"), Arrays.asList("SUCCESS"));
-		
+		trunk.put(Arrays.asList("msg"), Arrays.asList("SUCCESS"));
 		/*Articlemap.clear();
 		Articlemap.put("msg", "SUCCESS");*/
-		
-		return box.get();
+		return trunk.get();
 	}
 	
 	@DeleteMapping("/")
@@ -86,23 +82,24 @@ public class ArticleCtrl {
 		printer.accept("글 삭제 요청"+param.getArtseq());
 		IConsumer<Article> c = t -> artMapper.deleteById(param);
 		c.accept(param);
-		box.accept(Arrays.asList("msg"), Arrays.asList("SUCCESS"));
-		
+		trunk.put(Arrays.asList("msg"), Arrays.asList("SUCCESS"));
 		/*Articlemap.clear();
 		Articlemap.put("msg", "SUCCESS");*/
-		
-		return box.get();
+		return trunk.get();
 	}
 	
 	@GetMapping("/countArt")
 	public Map<?,?> countArt() {
 		ISupplier<String> s = () -> artMapper.countArticle();
-		
 		/*Articlemap.clear();
 		Articlemap.put("count", s.get());*/
+		trunk.put(Arrays.asList("count"), Arrays.asList(s.get()));
+		return trunk.get();
+	}
+	
+	@GetMapping("/uploadAjax")
+	public void uploadAjax() {
 		
-		box.accept(Arrays.asList("count"), Arrays.asList(s.get()));
-		return box.get();
 	}
 		
 }

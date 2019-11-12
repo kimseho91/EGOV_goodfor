@@ -15,6 +15,10 @@
 	<select id="createDB" parameterType="hashmap">
 		${CREATE_DB}
 	</select>
+	
+	<select id="truncateCustomer" parameterType="hashmap">
+		${TRUNCATE_CUSTOMER}
+	</select>
 
     <select id="selectByIdPw" resultType="Customer">
         SELECT * FROM CUSTOMER WHERE MID LIKE #{mid} AND MPW LIKE #{mpw}

@@ -2,12 +2,23 @@ package com.goodfor.web.pxy;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.goodfor.web.aop.TxMapper;
+import com.goodfor.web.cus.Customer;
+import com.goodfor.web.cus.CustomerMapper;
+import com.goodfor.web.enums.SQL;
 
 @Component("manager")
 public class CustomerProxy extends Proxy{
+	@Autowired CustomerMapper cusMapper;
+	@Autowired TxMapper txMapper;
+	
 	public String makeMid(){
 		List<String> fid = Arrays.asList("a","b","c","d","e","f","g","h","i",
 										 "j","k","l","m","n","o","p","q","r",
@@ -37,6 +48,7 @@ public class CustomerProxy extends Proxy{
 		String fullMid = fid.get(0) + did.get(1) + tid.get(2) + qid.get(3) + pid.get(4);
 		return fullMid;
 	}
+	
 	public String makeEmail(){
 		List<String> fid = Arrays.asList("a","b","c","d","e","f","g","h","i",
 										 "j","k","l","m","n","o","p","q","r",
@@ -63,9 +75,11 @@ public class CustomerProxy extends Proxy{
 		Collections.shuffle(tid);
 		Collections.shuffle(qid);
 		Collections.shuffle(pid);
+		Collections.shuffle(mail);
 		String email = fid.get(0) + did.get(1) + tid.get(2) + qid.get(3) + pid.get(4) + mail.get(5);
 		return email;
 	}
+	
 	public String makeMname(){
 		 List<String> fname = Arrays.asList("김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안",
 			        "송", "류", "전", "홍", "고", "문", "양", "손", "배", "조", "백", "허", "유", "남", "심", "노", "정", "하", "곽", "성", "차", "주",
@@ -86,5 +100,55 @@ public class CustomerProxy extends Proxy{
 			    Collections.shuffle(name);
 			    String fullname = fname.get(0) + name.get(0) + name.get(1);
 			    return fullname;
+	}
+
+	public String makeBirth() {
+		int maxBirthYear = 90;
+		int minBirthYear = 60;
+		int[] maxDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		int iMinMonth = 1;
+		int iMaxMonth = 12;
+		int iRandomYear = (int) (Math.random() * maxBirthYear - minBirthYear + 1) + minBirthYear;
+		int iRandomMonth = (int) (Math.random() * iMaxMonth - iMinMonth + 1) + iMinMonth;
+		int iRandomDay = (int) (Math.random() * maxDays[iRandomMonth - 1] + 1);
+		return String.format("%02d%02d%02d", iRandomYear, iRandomMonth, iRandomDay);
+	}
+
+	public String makeRegisteDate() {
+		int maxBirthYear = 19;
+		int minBirthYear = 15;
+		int[] maxDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		int iMinMonth = 1;
+		int iMaxMonth = 12;
+		int iRandomYear = (int) (Math.random() * maxBirthYear - minBirthYear + 1) + minBirthYear;
+		int iRandomMonth = (int) (Math.random() * iMaxMonth - iMinMonth + 1) + iMinMonth;
+		int iRandomDay = (int) (Math.random() * maxDays[iRandomMonth - 1] + 1);
+		return String.format("%02d%02d%02d", iRandomYear, iRandomMonth, iRandomDay);
+	}
+
+	public String makePhoneNum() {
+		int phoneNum1 = (int) (Math.random() * 10000);
+		int phoneNum2 = (int) (Math.random() * 10000);
+		return String.format("010%04d%04d", phoneNum1, phoneNum2);
+	}
+
+	public String makeTooja() {
+		return String.valueOf((int) (Math.random() * 3 + 1));
+	}
+	
+	public Customer makeCustomer() {
+		return new Customer(makeMid(), "1234", makeMname(), makeEmail(), makePhoneNum(), makeBirth(), makeTooja(), makeRegisteDate(),"1");
+	}
+	
+	@Transactional
+	public void insertCustomer() {
+		for(int i=0; i<500; i++) {
+			txMapper.insertCustomer(makeCustomer());
+		}
+	}
+	public void truncateCustomer() {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("TRUNCATE_CUSTOMER", SQL.TRUNCATE_CUSTOMER.toString());
+		cusMapper.truncateCustomer(map);
 	}
 }

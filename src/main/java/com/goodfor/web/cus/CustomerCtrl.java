@@ -3,7 +3,6 @@ package com.goodfor.web.cus;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,8 +97,3 @@ public class CustomerCtrl {
 		return paramMap;
     }
 }
-
-
-
-
-

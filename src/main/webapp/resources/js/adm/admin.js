@@ -74,7 +74,8 @@ admin = (()=>{
 				{txt : '상품등록', name : 'itemreg'},
 				{txt : '상품조회', name : 'itemsrch'},
 				{txt : '상품관리', name : 'itemmgt'},
-				{txt : '상품삭제', name : 'itemdel'}],
+				{txt : '상품삭제', name : 'itemdel'},
+				{txt : '커뮤니티관리', name :'comm_mgt'}],
 			(i,j)=>{
 				$('<div name="'+j.name+'">'+j.txt+'</div>')
 				.css({border: '2px solid blue', margin : '0 auto', 'line-height':'50px'})
@@ -99,6 +100,9 @@ admin = (()=>{
 						itemmgt()
 						break;
 					case 'itemdel':
+						itemdel()
+						break;
+					case 'comm_mgt':
 						itemdel()
 						break;
 					}
@@ -233,7 +237,7 @@ admin = (()=>{
 			.appendTo('#right')
 	       	.click(e=>{
 	       		e.preventDefault()
-	       		$.getJSON(_+'/cmm/register/customers',d=>{
+	       		$.getJSON(_+'/tx/register/customers',d=>{
 	       			alert("유저의 수 = " +d.custsCount)
 	       		})
 	       	})
@@ -253,6 +257,16 @@ admin = (()=>{
 		
 		let itemdel=()=>{
 			alert('itemdel 화면 들어옴')
+		}
+		let comm_mgt=()=>{
+			$('<a>커뮤니티 테이블 생성</a><br/>')
+			.appendTo('#right')
+	       	.click(e=>{
+	       		e.preventDefault()
+	       		$.getJSON(_+'/brd/create/table',d=>{
+	       			alert("디비 생성 = " +d.msg)
+	       		})
+	       	})
 		}
 		
 		// $('#left').css({border: '2px solid black', width: '20%', 'vertical-align':'top'})	

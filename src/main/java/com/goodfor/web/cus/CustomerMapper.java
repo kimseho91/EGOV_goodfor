@@ -14,4 +14,5 @@ public interface CustomerMapper {
 	public void createCustomer(HashMap<String, String> paramMap);
 	public void dropCustomer(HashMap<String, String> paramMap);
 	public void createDB(HashMap<String, String> paramMap);
+	public void truncateCustomer(HashMap<String, String> paramMap);
 }
