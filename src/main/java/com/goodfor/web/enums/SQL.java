@@ -1,7 +1,7 @@
 package com.goodfor.web.enums;
 
 public enum SQL {
-	CREATE_CUSTOMER, DROP_CUSTOMER, CREATE_DB;
+	CREATE_CUSTOMER, DROP_CUSTOMER, CREATE_DB, CREATE_STOCK, DROP_STOCK;
 	@Override
 	public String toString() {
 		String result = "";
@@ -23,6 +23,12 @@ public enum SQL {
 			break;
 		case CREATE_DB:
 			result = "CREATE DATABASE GOODFOR";
+			break;
+		case CREATE_STOCK:
+			result = "CREATE DATABASE STOCK";
+			break;
+		case DROP_STOCK:
+			result = "CREATE DATABASE STOCK";
 			break;
 		default:
 			break;

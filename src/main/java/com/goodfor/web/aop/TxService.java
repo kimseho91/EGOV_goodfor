@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.goodfor.web.cus.Customer;
 import com.goodfor.web.cus.CustomerMapper;
-import com.goodfor.web.pxy.Proxy;
+import com.goodfor.web.pxy.CrawllingProxy;
 
 @Transactional
 @Service
 public class TxService {
 	@Autowired CustomerMapper cusMapper;
 	@Autowired TxMapper txMapper;
-	@Autowired Proxy pxy;
+	@Autowired CrawllingProxy cralwpxy;
 	//@Autowired List<String> txServiceList;
 
 	@SuppressWarnings("unchecked")
 	public List<?> crawling(Map<?,?> paramMap){
 		List<String> txServiceList = new ArrayList<>();
 		txServiceList.clear();
-		txServiceList = (List<String>) pxy.crawl(paramMap);
+		txServiceList = (List<String>) cralwpxy.crawl(paramMap);
 		return txServiceList;		
 	}
 	

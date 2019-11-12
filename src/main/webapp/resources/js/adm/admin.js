@@ -205,6 +205,14 @@ admin = (()=>{
                     '</div>'+
                 '</div>')
 			.appendTo('#right')
+			$('<a>고객 디비 생성</a><br/>')
+			.appendTo('#right')
+	       	.click(e=>{
+	       		e.preventDefault()
+	       		$.getJSON(_+'/cmm/create/db',d=>{
+	       			alert("디비 생성 = " +d.msg)
+	       		})
+	       	})
 			$('<a>고객 테이블 생성</a><br/>')
 			.appendTo('#right')
 	       	.click(e=>{
@@ -221,22 +229,14 @@ admin = (()=>{
 	       			alert("테이블 삭제 = " +d.msg)
 	       		})
 	       	})
-	       	$('<a>고객 디비 생성</a><br/>')
-			.appendTo('#right')
-	       	.click(e=>{
-	       		e.preventDefault()
-	       		$.getJSON(_+'/cmm/create/db',d=>{
-	       			alert("디비 생성 = " +d.msg)
-	       		})
-	       	})
-			/**$('<a>고객 대량정보 입력</a>')
+			$('<a>고객 대량정보 입력</a>')
 			.appendTo('#right')
 	       	.click(e=>{
 	       		e.preventDefault()
 	       		$.getJSON(_+'/cmm/register/customers',d=>{
 	       			alert("유저의 수 = " +d.custsCount)
 	       		})
-	       	})*/
+	       	})
 		}
 		
 		let itemreg=()=>{
