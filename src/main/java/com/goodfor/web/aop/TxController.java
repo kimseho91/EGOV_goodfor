@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goodfor.web.pxy.ProxyMap;
+import com.goodfor.web.pxy.Box;
 import com.goodfor.web.utl.Printer;
 
 
@@ -25,7 +25,7 @@ public class TxController {
 	@Autowired Printer printer;
 	@Autowired Map<String, Object> txctrlmap;
 	@Autowired TxService txservice;
-	@Autowired ProxyMap map;
+	@Autowired Box box;
 	
 	@GetMapping("/{site}/{srch}")
 	public Map<?,?> goGoogle(@PathVariable String site, @PathVariable String srch){
@@ -45,8 +45,8 @@ public class TxController {
 	public Map<?,?> registerCusts(){
 		int custsCount = txservice.resisterCus();
 		printer.accept("서비스 카운팅 : "+ custsCount);
-		map.accept(Arrays.asList("custsCount"), Arrays.asList(custsCount));
-		return map.get();
+		box.accept(Arrays.asList("custsCount"), Arrays.asList(custsCount));
+		return box.get();
 	}
 
 }
